@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Customisation/Scenes/GamePlay.unity
     guid: 3c9527ee3059ebf409fa8fd0cf72485d
+  - enabled: 1
+    path: Assets/Customisation/Scenes/Death.unity
+    guid: f36b3427e62da444d8cedb77d9ba6521
   m_configObjects: {}

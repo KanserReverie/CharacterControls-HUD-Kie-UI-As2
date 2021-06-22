@@ -17,3 +17,19 @@ MonoBehaviour:
     keycode: 119
   - name: Backwards
     keycode: 115
+  - name: Left
+    keycode: 97
+  - name: Right
+    keycode: 100
+  - name: Crouch
+    keycode: 306
+  - name: Run
+    keycode: 304
+  - name: LevelUp
+    keycode: 109
+  - name: UseHealth
+    keycode: 118
+  - name: UseMana
+    keycode: 98
+  - name: UseStamina
+    keycode: 110

@@ -257,9 +257,10 @@ namespace Debugging.Player
             {
                 case "health":
                     health -= healthUseage;
+                    m.TakeDamage();
                     if (health < minHealth)
                     {
-                        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+                        SceneManager.LoadScene(2);
                     }
                     break;
                 case "mana":

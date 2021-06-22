@@ -16,20 +16,41 @@ namespace Debugging.Player
         private CharacterController _charC;
         private Animator myAnimator;
         public CustomisationGet GetG;
+        public GameObject damageIndication;
 
         public KeyBinds keyBinds;
+
+        private float damageTimer;
+        public float maxDamageTimer = 2;
+
         #endregion
 
         private void Start()
         {
             _charC = GetComponent<CharacterController>();
             myAnimator = GetComponentInChildren<Animator>();
+            damageTimer = 0;
         }
 
         private void Update()
         {
             Move();
             StatUse();
+            CheckDamage();
+        }
+
+        // This will display the damage indication
+        private void CheckDamage()
+        {
+            if (damageTimer >= 0 && damageIndication.gameObject.activeSelf == false)
+            {
+                damageIndication.gameObject.SetActive(true);
+                damageTimer -= Time.deltaTime;
+            }
+            else if (damageTimer < 0 && damageIndication.gameObject.activeSelf == true)
+            {
+                damageIndication.gameObject.SetActive(false);
+            }
         }
 
         private void StatUse()
@@ -97,6 +118,9 @@ namespace Debugging.Player
             runSpeed = walkSpeed * 7;
             crouchSpeed = walkSpeed * 0.25f;
         }
-
+        public void TakeDamage()
+        {
+            damageTimer = maxDamageTimer;
+        }
     }
 }
