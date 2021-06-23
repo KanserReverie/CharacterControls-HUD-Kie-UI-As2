@@ -8,10 +8,23 @@ public class KeybindTest : MonoBehaviour
     public KeyBinds keybinds;
 
     public Text text;
+    
+    public string keybindKey;
+
+
+    // Start gets called when scene starts.
+    private void Start()
+    {
+        // Makes a string.
+        string displayText;
+        // Gets the String of the current key.
+        displayText = keybinds.GetKeyString(keybindKey);
+        // Display this text of the current key bind.
+        text.text = displayText;
+    }
 
     public void ChangeKeybinds(string keyBind)
     {
-        
         StartCoroutine(listenForKeyChange(keyBind));
     }
 

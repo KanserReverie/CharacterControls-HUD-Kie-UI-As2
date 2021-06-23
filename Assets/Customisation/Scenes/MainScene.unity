@@ -7893,7 +7893,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1232077068}
   - component: {fileID: 1232077067}
-  - component: {fileID: 1232077069}
   m_Layer: 0
   m_Name: Audio
   m_TagString: Untagged
@@ -7919,7 +7918,7 @@ AudioSource:
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 128
+  Priority: 121
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 500
@@ -8011,22 +8010,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1232077069
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1232077066}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4bc9312c6970bef4a89bcab9845de28e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  musicSlider: {fileID: 0}
-  pitchSlider: {fileID: 0}
-  musicAudio: {fileID: 24100000, guid: 88e250e8d05322c46bf2b5b0bfeee282, type: 2}
-  masterAudio: {fileID: 24100000, guid: 88e250e8d05322c46bf2b5b0bfeee282, type: 2}
 --- !u!1 &1257871369
 GameObject:
   m_ObjectHideFlags: 0

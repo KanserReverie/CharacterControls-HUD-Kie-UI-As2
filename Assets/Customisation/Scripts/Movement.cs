@@ -20,13 +20,18 @@ namespace Debugging.Player
 
         public KeyBinds keyBinds;
 
+        public bool PausedGame;
+
         private float damageTimer;
-        public float maxDamageTimer = 2;
+        private float maxDamageTimer = 1;
 
         #endregion
 
         private void Start()
         {
+            damageIndication.gameObject.SetActive(false);
+            maxDamageTimer = 1;
+            PausedGame = false;
             _charC = GetComponent<CharacterController>();
             myAnimator = GetComponentInChildren<Animator>();
             damageTimer = 0;
@@ -34,65 +39,90 @@ namespace Debugging.Player
 
         private void Update()
         {
-            Move();
-            StatUse();
-            CheckDamage();
+            if (!PausedGame)
+            {
+                Move();
+                StatUse();
+                CheckDamage();
+            }
         }
 
-        // This will display the damage indication
+        // This will display the damage indication.
         private void CheckDamage()
         {
-            if (damageTimer >= 0 && damageIndication.gameObject.activeSelf == false)
+            // no dam taken.
+            if (damageTimer > 0)
             {
-                damageIndication.gameObject.SetActive(true);
+                // timer for a second.
                 damageTimer -= Time.deltaTime;
             }
+            // Activate if true and timer at or below 0.
             else if (damageTimer < 0 && damageIndication.gameObject.activeSelf == true)
             {
+                // Stop damage indicator game object.
                 damageIndication.gameObject.SetActive(false);
+                // Timer = 0.
+                damageTimer = 0;
             }
         }
 
         private void StatUse()
         {
-            if (keyBinds.GetKey("Forwards"))
+            if (keyBinds.GetKey("UseHealth"))
             {
-                Debug.Log("dfdsf");
                 GetG.UseStat("health");
             }
-            //if (keyBinds.GetKey(KeyCode.B))
-            //{
-            //    GetG.UseStat("mana");
-            //}
-            //if (keyBinds.GetKey(KeyCode.N))
-            //{
-            //    GetG.UseStat("stamina");
-            //}
-            //if (keyBinds.GetKey(KeyCode.M))
-            //{
-            //    GetG.LevelUp();
-            //}
+            if (keyBinds.GetKey("UseMana"))
+            {
+                GetG.UseStat("mana");
+            }
+            if (keyBinds.GetKey("UseStamina"))
+            {
+                GetG.UseStat("stamina");
+            }
+            if (keyBinds.GetKey("LevelUp"))
+            {
+                GetG.LevelUp();
+            }
         }
 
         private void Move()
         {
-            Vector2 movementInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+            Vector2 movementInput = new Vector2(0,0);
+
+            if (keyBinds.GetKey("Forwards"))
+            {
+                movementInput.y += 1;
+            }
+            if (keyBinds.GetKey("Backwards"))
+            {
+                movementInput.y += -1;
+
+            }
+            if (keyBinds.GetKey("Left"))
+            {
+                movementInput.x += -1;
+            }
+            if (keyBinds.GetKey("Right"))
+            {
+                movementInput.x += 1;
+            }
 
             if (_charC.isGrounded)
             {
-                if (Input.GetButton("Crouch"))
+                if (keyBinds.GetKey("Crouch"))
                 {
                     moveSpeed = crouchSpeed;
                     myAnimator.SetFloat("speed", 0.25f);
                 }
                 else
                 {
-                    if (Input.GetButton("Sprint"))
+                    if (keyBinds.GetKey("Run"))
                     {
                         moveSpeed = runSpeed;
                         myAnimator.SetFloat("speed", 7f);
                     }
-                    else if (!Input.GetButton("Sprint"))
+                    else if (!keyBinds.GetKey("Run"))
                     {
                         moveSpeed = walkSpeed;
 
@@ -102,11 +132,7 @@ namespace Debugging.Player
 
                 myAnimator.SetBool("walking", movementInput.magnitude > 0.05f);
 
-                _moveDir = transform.TransformDirection(new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")) * moveSpeed);
-                if (Input.GetButton("Jump"))
-                {
-                    _moveDir.y = jumpSpeed;
-                }
+                _moveDir = transform.TransformDirection(new Vector3(movementInput.x, 0, movementInput.y) * moveSpeed);
             }
             _moveDir.y -= _gravity * Time.deltaTime;
             _charC.Move(_moveDir * Time.deltaTime);
@@ -120,6 +146,7 @@ namespace Debugging.Player
         }
         public void TakeDamage()
         {
+            damageIndication.gameObject.SetActive(true);
             damageTimer = maxDamageTimer;
         }
     }

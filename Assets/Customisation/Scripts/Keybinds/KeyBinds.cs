@@ -18,6 +18,13 @@ public class KeyBinds : ScriptableObject
         Bind bind = Keybinds.Find((x) => x.name == key);
         return bind != null ? Input.GetKey(bind.keycode) : false;
     }
+    public string GetKeyString(string key)
+    {
+        Bind bind = Keybinds.Find((x) => x.name == key);
+        return Enum.GetName(  typeof(KeyCode), bind.keycode);
+    }
+
+
     public bool GetKeyUp(string key)
     {
         Bind bind = Keybinds.Find((x) => x.name == key);
